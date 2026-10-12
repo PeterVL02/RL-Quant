@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "torch>=2.14.1",
+    "tqdm>=4.70.1",
 ]
 
 [[tool.uv.index]]
@@ -21,5 +23,18 @@ torch = { index = "pytorch-cu132" }
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[dependency-groups]
+dev = [
+    "ruff>=0.17.0",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["mario", "models"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# D1: missing docstrings, ANN: missing type hints, N: PEP 8 naming, UP: modern syntax.
+select = ["E", "F", "W", "I", "B", "UP", "N", "ANN", "D1"]
+ignore = ["N812"]  # `import torch.nn.functional as F` is the torch idiom
